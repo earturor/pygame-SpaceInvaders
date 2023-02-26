@@ -66,13 +66,13 @@ def main():
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN or event.key == pygame.K_w or event.key == pygame.K_s:
                     playerPosY_change = 0
 
-        # Position limits on screen
+        # X position limits on screen
         playerPosX += playerPosX_change
         if playerPosX <= 20:
             playerPosX = 20
         elif playerPosX >= 460:
             playerPosX = 460
-
+        # Y position limits on screen
         playerPosY += playerPosY_change
         if playerPosY <= 20:
             playerPosY = 20
