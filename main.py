@@ -1,3 +1,4 @@
+import math
 import pygame
 from pygame import mixer
 
@@ -6,10 +7,14 @@ def main():
     pygame.init()
 
     # Create the screen
-    screen = pygame.display.set_mode((512, 512))
+    width = 512
+    height = 512
+    screen = pygame.display.set_mode((width, height))
 
     # Background
     background = pygame.image.load('assets/Blue_Nebula_01-512x512.png')
+    bgScroll = 0
+    tiles = math.ceil(height / background.get_height()) + 1
 
     # Background music
     mixer.music.load('assets/Sci-Fi_1_Loop.mp3')
@@ -38,16 +43,18 @@ def main():
     # Main loop
     while running:
 
-        # RGB = Red, Green, Blue
-        screen.fill((0, 0, 0))
-        #Background image
-        screen.blit(background, (0, 0))
+        # Looping background
+        for i in range(tiles):
+            screen.blit(background, (0, -background.get_height() * i + bgScroll))
+        
+        bgScroll += 0.01
+        if abs(bgScroll) > background.get_height():
+            bgScroll = 0
+
         # Event handling, gets all event from the event queue
         for event in pygame.event.get():
-            # Only do something if the event is of type QUIT
-            if event.type == pygame.QUIT:
-                # Change the value to False to exit the main loop
-                running = False
+            if event.type == pygame.QUIT: # only do something if the event is of type QUIT
+                running = False # change the value to False to exit the main loop
 
             # if keystroke is pressed, check wether its left, down, up or down
             if event.type == pygame.KEYDOWN:
