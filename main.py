@@ -1,6 +1,5 @@
 import math
 import pygame
-from pygame import mixer
 
 def main():
     # Intialize the game
@@ -17,9 +16,9 @@ def main():
     tiles = math.ceil(height / background.get_height()) + 1
 
     # Background music
-    mixer.music.load('assets/Sci-Fi_1_Loop.mp3')
-    mixer.music.play(loops=-1)
-    mixer.music.set_volume(0.2)
+    pygame.mixer.music.load('assets/Sci-Fi_1_Loop.mp3')
+    pygame.mixer.music.play(loops=-1)
+    pygame.mixer.music.set_volume(0.2)
 
     # Caption and icon
     pygame.display.set_caption("Space Invaders")
@@ -34,12 +33,23 @@ def main():
     playerPosY_change = 0
     playerSpeed = 0.2
 
+    # Enemy
+    enemyImage = pygame.image.load('assets/ovni.png')
+    enemyPosX = 240
+    enemyPosY = 0
+    enemyPosX_change = 0
+    enemyPosY_change = 0
+    enemySpeed = 0.1
+
     def player(posX, posY):
         screen.blit(playerImage, (posX, posY))
 
+    def enemy(posX, posY):
+        screen.blit(enemyImage, (posX, posY))
+
     # Define a varible to control the main loop
     running = True
-
+    pxs = 0
     # Main loop
     while running:
 
@@ -86,7 +96,24 @@ def main():
         elif playerPosY >= 460:
             playerPosY = 460
 
+        # Enemy movement
+        if pxs < 400:
+            enemyPosY_change = enemySpeed
+            enemyPosY += enemyPosY_change
+            enemyPosX = 200 * math.sin(enemyPosY / 32) + 240
+        elif pxs >= 400 and pxs < 750:
+            enemyPosY_change = -enemySpeed
+            enemyPosY += enemyPosY_change
+            enemyPosX_change = enemySpeed
+            enemyPosX -= enemyPosX_change / (400 / 240)
+        else:
+            enemyPosX_change = 0
+            enemyPosY_change = 0
+        
+        pxs += enemySpeed
+
         player(playerPosX, playerPosY)
+        enemy(enemyPosX, enemyPosY)
         pygame.display.update()
 
 if __name__ == '__main__':
