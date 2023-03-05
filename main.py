@@ -85,10 +85,10 @@ def main():
 
         # X position limits on screen
         playerPosX += playerPosX_change
-        if playerPosX <= 20:
-            playerPosX = 20
-        elif playerPosX >= 460:
-            playerPosX = 460
+        if playerPosX <= 15:
+            playerPosX = 15
+        elif playerPosX >= 465:
+            playerPosX = 465
         # Y position limits on screen
         playerPosY += playerPosY_change
         if playerPosY <= 20:
