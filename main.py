@@ -49,6 +49,7 @@ def main():
 
     # Define a varible to control the main loop
     running = True
+    # Define a variable to control the movement of the enemy at the start
     pxs = 0
     # Main loop
     while running:
@@ -101,16 +102,17 @@ def main():
             enemyPosY_change = enemySpeed
             enemyPosY += enemyPosY_change
             enemyPosX = 200 * math.sin(enemyPosY / 32) + 240
+            pxs += enemySpeed
         elif pxs >= 400 and pxs < 750:
             enemyPosY_change = -enemySpeed
             enemyPosY += enemyPosY_change
             enemyPosX_change = enemySpeed
             enemyPosX -= enemyPosX_change / (400 / 240)
+            pxs += enemySpeed
         else:
             enemyPosX_change = 0
             enemyPosY_change = 0
-        
-        pxs += enemySpeed
+
 
         player(playerPosX, playerPosY)
         enemy(enemyPosX, enemyPosY)
